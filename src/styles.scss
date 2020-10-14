@@ -1,1 +1,142 @@
 /* You can add global styles to this file, and also import other style files */
+*,*::after,*::before{
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html, body { height: 100%; }
+button{
+    $color: #e2e2e2;
+    $activeDelta: 15%;
+    $hoverDelta: 5%;
+
+    border: none;
+    transition: background-color .1s ease-in-out;
+    
+    background-color: $color;
+    color: #1D1D1D;
+
+    padding: .5em 1em;
+    border-radius: .2em;
+
+    &:hover{
+        cursor: pointer;
+        background-color: darken($color , $hoverDelta);
+    }
+
+    &:active{
+        background-color: darken($color , $activeDelta);
+    }
+
+    &.primary{
+        $color: #63e0bb;
+        background-color: $color;
+        &:hover{
+            cursor: pointer;
+            background-color: darken($color , $hoverDelta);
+        }
+    
+        &:active{
+            background-color: darken($color , $activeDelta);
+        }
+    }
+    &.secondary{
+        $color: #c5c5c5;
+        background-color: $color;
+        &:hover{
+            cursor: pointer;
+            background-color: darken($color , $hoverDelta);
+        }
+    
+        &:active{
+            background-color: darken($color , $activeDelta);
+        }
+    }
+    &.success{
+        $color: #85f152;
+        background-color: $color;
+        &:hover{
+            cursor: pointer;
+            background-color: darken($color , $hoverDelta);
+        }
+    
+        &:active{
+            background-color: darken($color , $activeDelta);
+        }
+    }
+    &.danger{
+        $color: #e24e33;
+        color: white;
+        background-color: $color;
+        &:hover{
+            cursor: pointer;
+            background-color: darken($color , $hoverDelta);
+        }
+    
+        &:active{
+            background-color: darken($color , $activeDelta);
+        }
+    }
+    &.warning{
+        $color: #f7d933;
+        background-color: $color;
+        &:hover{
+            cursor: pointer;
+            background-color: darken($color , $hoverDelta);
+        }
+    
+        &:active{
+            background-color: darken($color , $activeDelta);
+        }
+    }
+    &.info{
+        $color: #30dff7;
+        background-color: $color;
+        &:hover{
+            cursor: pointer;
+            background-color: darken($color , $hoverDelta);
+        }
+    
+        &:active{
+            background-color: darken($color , $activeDelta);
+        }
+    }
+    &.light{
+        $color: #e2e2e2;
+        background-color: $color;
+        &:hover{
+            cursor: pointer;
+            background-color: darken($color , $hoverDelta);
+        }
+    
+        &:active{
+            background-color: darken($color , $activeDelta);
+        }
+    }
+    &.dark{
+        $color: #1D1D1D;
+        color: white;
+        background-color: $color;
+        &:hover{
+            cursor: pointer;
+            background-color: lighten($color , $hoverDelta);
+        }
+    
+        &:active{
+            background-color: lighten($color , $activeDelta);
+        }
+    }
+}
+app-navbar-top{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+app-navbar-sec{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

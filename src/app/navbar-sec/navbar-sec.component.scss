@@ -1,0 +1,28 @@
+nav{
+    background: rgba(237, 237, 237, 0.9);
+    backdrop-filter: blur(1rem);
+    user-select: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    height: 9vh;
+    a{
+        color: #777777;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        align-content: center;
+        flex-direction: column;
+        &:hover{
+            cursor: pointer;
+            color: darken(#777777, 5%);
+        }
+        &:active{
+            color: darken(#777777, 15%);
+        }
+        &.active{
+            color: #1D1D1D;
+        }
+    }
+}
