@@ -1,0 +1,15 @@
+<div class="news-wrapper">
+    <div class="news-card">
+        <div class="details">
+            <div class="author">{{newsTestObj.author}}</div>
+            <div class="title">{{newsTestObj.description}}</div>
+            <div class="extra">
+                <div class="date">{{newsTestObj.publishedAt | date: 'shortTime'}}</div>
+                <a [href]="newsTestObj.url" target="_">
+                    <mat-icon>link</mat-icon>
+                </a>
+            </div>
+        </div>
+        <img [src]="newsTestObj.urlToImage" alt="">
+    </div>
+</div>

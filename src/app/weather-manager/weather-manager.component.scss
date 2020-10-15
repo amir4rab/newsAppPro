@@ -1,0 +1,18 @@
+.weather-card{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-top: 1rem;
+    .temp{
+        font-size: 3rem;
+        flex-grow: 1;
+        font-weight: 700;
+        position: relative;
+    }
+    .status{
+        padding-right: .75rem;
+    }
+    .status,.feels-like{
+        padding-bottom: .65rem;
+    }
+}

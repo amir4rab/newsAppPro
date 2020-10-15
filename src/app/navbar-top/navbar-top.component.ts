@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalDbService } from '../globalServices/global-db.service';
 
 @Component({
   selector: 'app-navbar-top',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar-top.component.scss']
 })
 export class NavbarTopComponent implements OnInit {
-
-  constructor() { }
+  currentCity: string;
+  constructor(private globalDb: GlobalDbService) { }
 
   ngOnInit(): void {
+    this.currentCity = this.globalDb.locationDataGeter('locationCity');
   }
 
 }

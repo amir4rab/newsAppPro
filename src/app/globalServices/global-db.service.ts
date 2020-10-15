@@ -32,15 +32,16 @@ export class GlobalDbService {
     this.locarionDataSeter('Berlin', 'locationCity');
     this.locarionDataSeter('germany', 'locationCountry');
     this.locarionDataSeter('de', 'locationCountryCode');
-    console.log(this.cDb.germanyCities);
   }
 
   locarionDataSeter(input: string, locationType: LocationTypes): void{
     this.locationData[locationType] = input;
   }
+  
   locationObjDataGeter(): object{
     return this.locationData;
   }
+
   get locationSpData(): {
     locationCity: string,
     locationCountry: string,
@@ -48,13 +49,15 @@ export class GlobalDbService {
   }{
     return this.locationData;
   }
+
   locationDataGeter(locationType: LocationTypes): string{
     return this.locationData[locationType];
   }
-  set activePageState(input: 'home' | 'setting'){
-    this.acitvePage = input;
-  }
-  get activePageState(): 'home' | 'setting'{
-    return this.acitvePage;
-  }
+
+  // set activePageState(input: 'home' | 'setting'){
+  //   this.acitvePage = input;
+  // }
+  // get activePageState(): 'home' | 'setting'{
+  //   return this.acitvePage;
+  // }
 }
