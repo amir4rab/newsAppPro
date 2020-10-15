@@ -1,15 +1,13 @@
-<div class="news-wrapper">
-    <div class="news-card">
-        <div class="details">
-            <div class="author">{{newsTestObj.author}}</div>
-            <div class="title">{{newsTestObj.description}}</div>
-            <div class="extra">
-                <div class="date">{{newsTestObj.publishedAt | date: 'shortTime'}}</div>
-                <a [href]="newsTestObj.url" target="_">
-                    <mat-icon>link</mat-icon>
-                </a>
-            </div>
+<div class="news-card">
+    <div class="details">
+        <div class="author">{{newsObj.source.name | uppercase}}</div>
+        <div class="title">{{newsObj.description | shorten: 76}}</div>
+        <div class="extra">
+            <div class="date">{{newsObj.publishedAt | date: 'shortTime'}}</div>
+            <a [href]="newsObj.url" target="_">
+                <mat-icon>link</mat-icon>
+            </a>
         </div>
-        <img [src]="newsTestObj.urlToImage" alt="">
     </div>
+    <img [src]="newsObj.urlToImage" alt="">
 </div>

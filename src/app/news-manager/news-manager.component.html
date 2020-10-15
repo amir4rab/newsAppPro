@@ -1,1 +1,5 @@
-<app-news-card></app-news-card>
+<div class="news-array">
+    <div class="news-card" *ngFor="let news of newsArr">
+        <app-news-card [newsObj]=news></app-news-card>
+    </div>
+</div>

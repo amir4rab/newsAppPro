@@ -12,12 +12,12 @@ export class NewsManagerComponent implements OnInit {
   constructor(private newsApi: NewsApiService) { }
 
   ngOnInit(): void {
-    // this.newsApi.getNewsData().subscribe( res => {
-    //   console.log(res);
-    //   this.newsArr = res.articles;
-    // }, err => {
-    //   console.warn(err);
-    // });
+    this.newsApi.getNewsData().subscribe( res => {
+      console.log(res);
+      this.newsArr = res.articles;
+    }, err => {
+      console.warn(err);
+    });
   }
 
 }

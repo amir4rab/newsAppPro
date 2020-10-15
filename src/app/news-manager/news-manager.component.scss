@@ -1,0 +1,9 @@
+.news-array{
+    padding: 0 1rem;
+    .news-card{
+        padding: 1rem 0;
+        &:not(:last-child){
+            border-bottom: solid .1rem #707070;
+        }
+    }
+}
