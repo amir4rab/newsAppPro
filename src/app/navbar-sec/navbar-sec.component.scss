@@ -7,22 +7,29 @@ nav{
     align-items: center;
     align-content: center;
     height: 9vh;
-    a{
-        color: #777777;
+    .navBtn{
+        width: 33vw;
+        outline: none;
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
-        align-content: center;
-        flex-direction: column;
-        &:hover{
-            cursor: pointer;
-            color: darken(#777777, 5%);
-        }
-        &:active{
-            color: darken(#777777, 15%);
-        }
-        &.active{
-            color: #1D1D1D;
+        a{
+            color: #777777;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            align-content: center;
+            flex-direction: column;
+            &:hover{
+                cursor: pointer;
+                color: darken(#777777, 5%);
+            }
+            &:active{
+                color: darken(#777777, 15%);
+            }
+            &.active{
+                color: #1D1D1D;
+            }
         }
     }
 }

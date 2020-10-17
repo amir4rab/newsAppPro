@@ -4,14 +4,19 @@
     width: 80px;
     height: 80px;
 }
-.lds-ellipsis div {
+.lds-ellipsis div{
     position: absolute;
     top: 33px;
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: #ffffff;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis.dark div{
+    background: #707070;
+}
+.lds-ellipsis.light div{
+    background: #ffffff;
 }
 .lds-ellipsis div:nth-child(1) {
     left: 8px;

@@ -1,1 +1,12 @@
-<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+<div *ngIf="bgColor === 'light'" class="lds-ellipsis light">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<div *ngIf="bgColor === 'dark'" class="lds-ellipsis dark">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>

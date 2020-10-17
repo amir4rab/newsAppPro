@@ -129,14 +129,16 @@ button{
     }
 }
 app-navbar-top{
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 500;
 }
 app-navbar-sec{
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    z-index: 500;
 }

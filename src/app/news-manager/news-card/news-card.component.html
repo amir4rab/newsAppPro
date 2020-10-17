@@ -1,7 +1,9 @@
 <div class="news-card">
     <div class="details">
         <div class="author">{{newsObj.source.name | uppercase}}</div>
-        <div class="title">{{newsObj.description | shorten: 76}}</div>
+        <div class="title">
+            {{newsObj.description | shorten: 76}}
+        </div>
         <div class="extra">
             <div class="date">{{newsObj.publishedAt | date: 'shortTime'}}</div>
             <a [href]="newsObj.url" target="_">
@@ -9,5 +11,5 @@
             </a>
         </div>
     </div>
-    <img [src]="newsObj.urlToImage" alt="">
+    <img [src]="newsObj.image" lazy alt="">
 </div>

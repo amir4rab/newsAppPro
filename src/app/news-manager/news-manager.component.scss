@@ -1,9 +1,21 @@
 .news-array{
-    padding: 0 1rem;
+    padding: 11rem 1rem 5rem 1rem;
+    .title{
+        font-size: 1.5rem;
+        font-weight: 700;
+        padding-bottom: .75rem;
+    }
     .news-card{
         padding: 1rem 0;
         &:not(:last-child){
             border-bottom: solid .1rem #707070;
         }
+    }
+    .limit-error{
+        $color: #cc0202;
+        padding: 1rem 0;
+        border-top: .1rem solid $color;
+        border-bottom: .1rem solid $color;
+        color: $color;
     }
 }

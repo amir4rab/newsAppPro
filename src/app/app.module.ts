@@ -15,6 +15,7 @@ import { WeatherManagerComponent } from './weather-manager/weather-manager.compo
 import { NewsCardComponent } from './news-manager/news-card/news-card.component';
 import { ShortenPipe } from './utilities/pipes/shorten.pipe';
 import { LoaderAnimationComponent } from './utilities/component/loader-animation/loader-animation.component';
+import { LoadingDisplayComponent } from './utilities/component/loading-display/loading-display.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoaderAnimationComponent } from './utilities/component/loader-animation
     WeatherManagerComponent,
     NewsCardComponent,
     ShortenPipe,
-    LoaderAnimationComponent
+    LoaderAnimationComponent,
+    LoadingDisplayComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { GlobalDbService } from './globalServices/global-db.service';
 
@@ -8,15 +9,10 @@ import { GlobalDbService } from './globalServices/global-db.service';
 })
 export class AppComponent {
   title = 'newsapp';
-  // constructor(private globalDb: GlobalDbService){
-  //   globalDb.loading.subscribe(res=>{
-  //     console.log(res);
-  //   });
-  // }
-  // setTrue(): void{
-  //   this.globalDb.loadingState = true;
-  // }
-  // setFalse(): void{
-  //   this.globalDb.loadingState = false;
-  // }
+  loading: boolean;
+  constructor(private globalDb: GlobalDbService, private http: HttpClient){
+    globalDb.loading.subscribe(res=>{
+      this.loading = res;
+    });
+  }
 }

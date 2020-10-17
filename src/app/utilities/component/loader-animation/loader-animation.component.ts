@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loader-animation',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loader-animation.component.scss']
 })
 export class LoaderAnimationComponent implements OnInit {
-
+  @Input() bgColor: 'light' | 'dark' = 'light';
   constructor() { }
 
   ngOnInit(): void {

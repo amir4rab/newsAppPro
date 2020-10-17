@@ -1,19 +1,17 @@
 export type news = {
   source: {
-    id: string,
+    url: string,
     name: string
-    },
-  author: string,
+  },
   title: string,
   description: string,
   url: string,
-  urlToImage: string,
+  image: string,
   publishedAt: string,
   content: boolean
 };
 export type newsArray = news[];
 export interface NewsResponse {
-  status: string;
-  totalResults: number;
-  articles: newsArray;
+  totalArticles: number;
+  articles: news[];
 }

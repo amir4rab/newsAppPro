@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { newsArray } from '../interfaces/NewsResponse.interface';
 import { WeatherResponse } from '../interfaces/WeatherResponse.interface';
@@ -14,12 +14,23 @@ export class GlobalDbService {
   private acitvePage: 'home' | 'setting' = 'home';
 
 
-  loading = new Subject();
+  loading = new BehaviorSubject<boolean>(true);
   set loadingState(state: boolean){
     if(state === true){
-      this.loading.next(true)
+      this.loading.next(true);
     }else{
-      this.loading.next(false)
+      this.loading.next(false);
+    }
+  }
+  
+  useingOfflineCashedData = new BehaviorSubject<boolean>(false);
+  set offlineCashedDataState(state: boolean){
+    if(state === true){
+      this.useingOfflineCashedData.next(true);
+      console.log('changed to ' + true);
+    }else{
+      this.useingOfflineCashedData.next(false);
+      console.log('changed to ' + false);
     }
   }
 
@@ -30,6 +41,7 @@ export class GlobalDbService {
     newsData: null,
     weatherData: null,
   };
+
   private locationData: {
     locationCity: string,
     locationCountry: string,
@@ -44,6 +56,8 @@ export class GlobalDbService {
     this.locarionDataSeter('Berlin', 'locationCity');
     this.locarionDataSeter('germany', 'locationCountry');
     this.locarionDataSeter('de', 'locationCountryCode');
+
+    // this.loading.next(false);
   }
 
   locarionDataSeter(input: string, locationType: LocationTypes): void{

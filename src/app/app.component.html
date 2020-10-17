@@ -1,6 +1,4 @@
 <app-navbar-top></app-navbar-top>
 <router-outlet></router-outlet>
 <app-navbar-sec></app-navbar-sec>
-
-<!-- <button (click)="setFalse()">set False</button>
-<button (click)="setTrue()">set True</button> -->
+<app-loading-display *ngIf="loading"></app-loading-display>
