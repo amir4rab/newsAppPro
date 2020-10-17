@@ -38,6 +38,7 @@
     img{
         height: $content-height;
         width: $content-height;
+        min-width: $content-height;
         object-fit: cover;
         object-position: center;
     }

@@ -15,7 +15,8 @@ export class GnewsApiService {
     this.location = this.globalDbService.locationDataGeter('locationCountryCode');
     return this.http.get<NewsResponse>(`https://gnews.io/api/v4/top-headlines?&country=de&token=${environment.GNews}`);
   }
-  getCashedData(country: string = 'de'): Observable<NewsResponse>{
+  getCashedData(): Observable<NewsResponse>{
+    const country = this.globalDbService.locationDataGeter('locationCountryCode');
     switch(country.toLowerCase()){
       case 'de':{
         return this.http.get<NewsResponse>('../../assets/deNews.txt');

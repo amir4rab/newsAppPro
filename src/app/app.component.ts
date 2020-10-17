@@ -10,7 +10,7 @@ import { GlobalDbService } from './globalServices/global-db.service';
 export class AppComponent {
   title = 'newsapp';
   loading: boolean;
-  constructor(private globalDb: GlobalDbService, private http: HttpClient){
+  constructor(private globalDb: GlobalDbService){
     globalDb.loading.subscribe(res=>{
       this.loading = res;
     });

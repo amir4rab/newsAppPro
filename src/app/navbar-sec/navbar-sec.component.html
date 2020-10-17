@@ -1,6 +1,9 @@
 <nav>
     <div class="navBtn">
-        <a class="active">
+        <a 
+            [ngClass]="{active: activePage === 'home'}"
+            (click)="setActivePage('home')"
+        >
             <div>
                 <mat-icon aria-hidden="false">watch_later</mat-icon>
             </div>
@@ -10,7 +13,10 @@
         </a>
     </div>
     <div class="navBtn">
-        <a>
+        <a 
+            [ngClass]="{active: activePage === 'acount'}"
+            (click)="setActivePage('acount')"
+        >
             <div>
                 <mat-icon aria-hidden="false">account_circle</mat-icon>
             </div>
@@ -20,7 +26,10 @@
         </a>
     </div>
     <div class="navBtn">
-        <a>
+        <a 
+            [ngClass]="{active: activePage === 'settings'}"
+            (click)="setActivePage('settings')"
+        >
             <div>
                 <mat-icon aria-hidden="false">settings</mat-icon>
             </div>

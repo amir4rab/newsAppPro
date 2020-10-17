@@ -18,7 +18,10 @@ export class NewsManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.offlineCashedObserver = this.globalDb.useingOfflineCashedData;
-    this.offlineCashedObserver.subscribe(res => res = this.offlineCashedMode);
+    this.offlineCashedObserver.subscribe(res => {
+      this.offlineCashedMode = res;
+    });
+    console.log(this.offlineCashedMode);
 
     if( !this.offlineCashedMode ) {
       this.getOnlineData();
@@ -55,7 +58,7 @@ export class NewsManagerComponent implements OnInit {
   getCashedData(){
     this.globalDb.offlineCashedDataState = true;
 
-    this.gnews.getCashedData('de').subscribe( res => {
+    this.gnews.getCashedData().subscribe( res => {
       this.newsArr = res.articles;
     }, err => {
       console.warn(err);

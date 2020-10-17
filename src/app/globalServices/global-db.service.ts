@@ -23,14 +23,13 @@ export class GlobalDbService {
     }
   }
   
-  useingOfflineCashedData = new BehaviorSubject<boolean>(false);
+  useingOfflineCashedData = new BehaviorSubject<boolean>(true);
   set offlineCashedDataState(state: boolean){
     if(state === true){
       this.useingOfflineCashedData.next(true);
-      console.log('changed to ' + true);
+      console.log('Offline Cashed mood!');
     }else{
       this.useingOfflineCashedData.next(false);
-      console.log('changed to ' + false);
     }
   }
 

@@ -16,6 +16,8 @@ import { NewsCardComponent } from './news-manager/news-card/news-card.component'
 import { ShortenPipe } from './utilities/pipes/shorten.pipe';
 import { LoaderAnimationComponent } from './utilities/component/loader-animation/loader-animation.component';
 import { LoadingDisplayComponent } from './utilities/component/loading-display/loading-display.component';
+import { SettingsManagerComponent } from './settings-manager/settings-manager.component';
+import { AcountManagerComponent } from './acount-manager/acount-manager.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { LoadingDisplayComponent } from './utilities/component/loading-display/l
     NewsCardComponent,
     ShortenPipe,
     LoaderAnimationComponent,
-    LoadingDisplayComponent
+    LoadingDisplayComponent,
+    SettingsManagerComponent,
+    AcountManagerComponent
   ],
   imports: [
     BrowserModule,
