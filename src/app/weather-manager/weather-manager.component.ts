@@ -14,18 +14,30 @@ export class WeatherManagerComponent implements OnInit {
   feelsLike: number;
   loadingStage: Observable<boolean>;
   constructor(private weatherApi: WeatherApiService, private globalDb: GlobalDbService) { 
-
+    // this.globalDb.loading.next(true);
   }
 
   ngOnInit(): void {
-    this.weatherApi.getData().subscribe(res => {
-      this.temp = +res.main.temp.toFixed(0);
-      this.status = res.weather[0].description;
-      this.feelsLike = +res.main.feels_like.toFixed(0);
-      this.globalDb.loadingState = false;
-    }, err =>{
-      console.warn(err);
-    })
+    this.getData();
   }
 
+  getData(): void{
+    if ( this.globalDb.cashedData.weatherData === null ) {     
+      this.weatherApi.getData().subscribe(res => {
+        this.temp = +res.main.temp.toFixed(0);
+        this.status = res.weather[0].description;
+        this.feelsLike = +res.main.feels_like.toFixed(0);
+        this.globalDb.loading.next(false);
+        this.globalDb.cashedData.weatherData = res;
+      }, err =>{
+        console.warn(err);
+      })
+    } else {
+      const cashedData = this.globalDb.cashedData.weatherData;
+      this.temp = +cashedData.main.temp.toFixed(0);
+      this.status = cashedData.weather[0].description;
+      this.feelsLike = +cashedData.main.feels_like.toFixed(0);
+      setTimeout(_=>this.globalDb.loading.next(false),1);
+    }
+  }
 }

@@ -11,10 +11,9 @@ type LocationTypes = 'locationCity' | 'locationCountry' | 'locationCountryCode';
   providedIn: 'root'
 })
 export class GlobalDbService {
-  private acitvePage: 'home' | 'setting' = 'home';
 
-
-  loading = new BehaviorSubject<boolean>(true);
+  //** setting for page loading animation **//
+  loading = new BehaviorSubject<boolean>(false);
   set loadingState(state: boolean){
     if(state === true){
       this.loading.next(true);
@@ -22,7 +21,8 @@ export class GlobalDbService {
       this.loading.next(false);
     }
   }
-  
+
+  //** setting for Api not being avilable **//
   useingOfflineCashedData = new BehaviorSubject<boolean>(true);
   set offlineCashedDataState(state: boolean){
     if(state === true){
@@ -33,6 +33,10 @@ export class GlobalDbService {
     }
   }
 
+  //** setting for cashing Api data in page Changes **//
+  activeRout = new Subject<string>();
+  
+  //** setting for cashing Api data in page Changes **//
   cashedData: {
     newsData: newsArray,
     weatherData: WeatherResponse,
@@ -41,6 +45,7 @@ export class GlobalDbService {
     weatherData: null,
   };
 
+  //** setting for Storing Data that used in Application **//
   private locationData: {
     locationCity: string,
     locationCountry: string,
@@ -52,21 +57,25 @@ export class GlobalDbService {
   };
 
   constructor(private cDb: CountryDbService) {
+
+    //** Default settings **//
     this.locarionDataSeter('Berlin', 'locationCity');
     this.locarionDataSeter('germany', 'locationCountry');
     this.locarionDataSeter('de', 'locationCountryCode');
 
-    // this.loading.next(false);
   }
 
+  //** Chaning location **//
   locarionDataSeter(input: string, locationType: LocationTypes): void{
     this.locationData[locationType] = input;
   }
   
+  //** Resiving hole Location Obj **//
   locationObjDataGeter(): object{
     return this.locationData;
   }
 
+  //** Resetting hole location data **//
   get locationSpData(): {
     locationCity: string,
     locationCountry: string,
@@ -75,14 +84,9 @@ export class GlobalDbService {
     return this.locationData;
   }
 
+  //** Resetting part of location data **//
   locationDataGeter(locationType: LocationTypes): string{
     return this.locationData[locationType];
   }
 
-  // set activePageState(input: 'home' | 'setting'){
-  //   this.acitvePage = input;
-  // }
-  // get activePageState(): 'home' | 'setting'{
-  //   return this.acitvePage;
-  // }
 }

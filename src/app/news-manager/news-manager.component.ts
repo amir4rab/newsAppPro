@@ -21,18 +21,22 @@ export class NewsManagerComponent implements OnInit {
     this.offlineCashedObserver.subscribe(res => {
       this.offlineCashedMode = res;
     });
-    console.log(this.offlineCashedMode);
 
-    if( !this.offlineCashedMode ) {
-      this.getOnlineData();
+    if ( this.globalDb.cashedData.newsData === null ) {
+      if( !this.offlineCashedMode ) {
+        this.getOnlineData();
+      } else {
+        this.getCashedData();
+      }
     } else {
-      this.getCashedData();
+      this.newsArr = this.globalDb.cashedData.newsData;
     }
   }
 
   getOnlineData(){
     this.gnews.getNewsData().subscribe( res => {
       this.newsArr = res.articles;
+      this.globalDb.cashedData.newsData = res.articles;
     }, err => {
       switch((err.status).toString()){
         case '429':{
@@ -60,6 +64,7 @@ export class NewsManagerComponent implements OnInit {
 
     this.gnews.getCashedData().subscribe( res => {
       this.newsArr = res.articles;
+      this.globalDb.cashedData.newsData = res.articles;
     }, err => {
       console.warn(err);
     });

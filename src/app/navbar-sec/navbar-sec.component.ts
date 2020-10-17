@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalDbService } from '../globalServices/global-db.service';
 type appPages = 'home' | 'settings' | 'acount';
 @Component({
   selector: 'app-navbar-sec',
@@ -8,34 +9,41 @@ type appPages = 'home' | 'settings' | 'acount';
 })
 export class NavbarSecComponent implements OnInit {
   activePage:appPages = 'home';
-  constructor(private router: Router) {
+  constructor(private router: Router, private globalDb: GlobalDbService) {
   }
 
   ngOnInit(): void {
     this.getUrl();
   }
+
   setActivePage(page: appPages): void{
     this.activePage = page;
+    this.globalDb.activeRout.next(page);
     
     if(page === 'home'){
       this.router.navigate(['']);
       return;
     }
-    this.router.navigate([page]).then(_=>console.log(this.router.url));
+    
+    this.router.navigate([page]);
   }
+
   getUrl(): void{
     setTimeout(_=>{
       switch(this.router.url){
         case '/': {
           this.activePage = 'home';
+          this.globalDb.activeRout.next('home');
           break
         }
         case '/acount':{
           this.activePage = 'acount';
+          this.globalDb.activeRout.next('acount');
           break
         }
         case '/settings':{
           this.activePage = 'settings';
+          this.globalDb.activeRout.next('settings');
           break
         }
       }
