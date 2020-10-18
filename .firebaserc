@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "newspro-12d8d": {
+      "hosting": {
+        "newsapp": [
+          "newspro-12d8d"
+        ]
+      }
+    }
+  }
+}

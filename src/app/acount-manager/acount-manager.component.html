@@ -1,1 +1,11 @@
-<p>acount-manager works!</p>
+<section>
+    <div class="login-section" *ngIf="!logedIn">
+        <button (click)="loginBtn()" class="g-login">
+            <p>
+                <img src="../../assets/imeges/g.svg" alt="">
+                Login with Google
+            </p>
+        </button>
+    </div>
+</section>
+

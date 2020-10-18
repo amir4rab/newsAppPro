@@ -13,6 +13,9 @@ type LocationTypes = 'locationCity' | 'locationCountry' | 'locationCountryCode';
 export class GlobalDbService {
 
   //** setting for page loading animation **//
+  userLogedin: boolean = false;
+
+  //** setting for page loading animation **//
   loading = new BehaviorSubject<boolean>(false);
   set loadingState(state: boolean){
     if(state === true){
@@ -38,8 +41,8 @@ export class GlobalDbService {
   
   //** setting for cashing Api data in page Changes **//
   cashedData: {
-    newsData: newsArray,
-    weatherData: WeatherResponse,
+    newsData: newsArray | null,
+    weatherData: WeatherResponse | null,
   } = {
     newsData: null,
     weatherData: null,

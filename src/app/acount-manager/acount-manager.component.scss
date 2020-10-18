@@ -1,0 +1,23 @@
+section{
+    padding: 10rem 1rem 5rem 1rem;
+}
+.login-section{
+    display: flex;
+    justify-content: center;
+    .g-login{
+        p{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            font-weight: 700;
+            padding: .25rem 15vw;
+            img{
+                position: absolute;
+                left: 0;
+                height: 1.25rem;
+                width: 1.25rem;
+            }
+        }
+    }
+}

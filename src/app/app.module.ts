@@ -18,6 +18,8 @@ import { LoaderAnimationComponent } from './utilities/component/loader-animation
 import { LoadingDisplayComponent } from './utilities/component/loading-display/loading-display.component';
 import { SettingsManagerComponent } from './settings-manager/settings-manager.component';
 import { AcountManagerComponent } from './acount-manager/acount-manager.component';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { AcountManagerComponent } from './acount-manager/acount-manager.componen
     AcountManagerComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

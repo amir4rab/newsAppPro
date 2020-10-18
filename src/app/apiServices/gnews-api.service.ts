@@ -19,7 +19,7 @@ export class GnewsApiService {
     const country = this.globalDbService.locationDataGeter('locationCountryCode');
     switch(country.toLowerCase()){
       case 'de':{
-        return this.http.get<NewsResponse>('../../assets/deNews.txt');
+        return this.http.get<NewsResponse>('../../assets/chashedGnews/deNews.txt');
         break
       }
     }
