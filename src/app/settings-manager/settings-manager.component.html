@@ -1,1 +1,18 @@
-<p>settings-manager works!</p>
+<section>
+    <div class="input-group">
+        <div class="label">
+            Show news from
+        </div>
+        <select name="newsOrigin" id="newsOrigin" (change)="selectCountry($event.target)">
+            <option *ngFor="let country of countryDataArr" [value]="country.name" [selected]="country.name === activeCountryData.locationCountry">{{country.name}}</option>
+        </select>
+    </div>
+    <div class="input-group">
+        <div class="label">
+            Show news from
+        </div>
+        <select name="newsOrigin" id="newsOrigin">
+            <option *ngFor="let city of countryData[slectedCountry].cities" value="country.name" [selected]="city === activeCountryData.locationCity">{{city}}</option>
+        </select>
+    </div>
+</section>

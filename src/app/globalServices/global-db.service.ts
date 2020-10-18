@@ -14,6 +14,11 @@ export class GlobalDbService {
 
   //** setting for page loading animation **//
   userLogedin: boolean = false;
+  userData: {
+    name: string;
+    email: string;
+    userId: string;
+  } = null;
 
   //** setting for page loading animation **//
   loading = new BehaviorSubject<boolean>(false);

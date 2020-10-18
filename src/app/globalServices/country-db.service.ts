@@ -12,6 +12,9 @@ export interface dataBaseInterface {
   austria: countryInterface;
 }
 
+export type dataBaseInterfaceArr = countryInterface[];
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -128,5 +131,13 @@ export class CountryDbService {
   }
   get dataBaseData(): dataBaseInterface{
     return this.dataBase;
+  }
+  get dataBaseDataArr(): dataBaseInterfaceArr{
+    const arr: dataBaseInterfaceArr = [];
+    for(let country in this.dataBase){
+      arr.push(this.dataBase[country])
+    }
+    console.log(arr);
+    return arr;
   }
 }
