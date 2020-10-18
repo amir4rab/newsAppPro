@@ -27,5 +27,6 @@ export class SettingsManagerComponent implements OnInit {
   selectCountry(el: HTMLSelectElement){
     console.log(el.value);
     this.slectedCountry = el.value;
+    this.globalDb.locarionCountrySeter = el.value;
   }
 }

@@ -17,10 +17,9 @@ export class NewsManagerComponent implements OnInit {
   constructor(private gnews: GnewsApiService, private globalDb: GlobalDbService) { }
 
   ngOnInit(): void {
-    this.offlineCashedObserver = this.globalDb.useingOfflineCashedData;
-    this.offlineCashedObserver.subscribe(res => {
-      this.offlineCashedMode = res;
-    });
+    // this.globalDb.useingOfflineCashedData.subscribe(res => {
+    //   this.offlineCashedMode = res;
+    // });
 
     if ( this.globalDb.cashedData.newsData === null ) {
       if( !this.offlineCashedMode ) {

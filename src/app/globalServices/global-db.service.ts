@@ -31,7 +31,7 @@ export class GlobalDbService {
   }
 
   //** setting for Api not being avilable **//
-  useingOfflineCashedData = new BehaviorSubject<boolean>(true);
+  useingOfflineCashedData = new BehaviorSubject<boolean>(false);
   set offlineCashedDataState(state: boolean){
     if(state === true){
       this.useingOfflineCashedData.next(true);
@@ -77,6 +77,15 @@ export class GlobalDbService {
   locarionDataSeter(input: string, locationType: LocationTypes): void{
     this.locationData[locationType] = input;
   }
+
+  //** Chaning location **//
+  set locarionCountrySeter(country: string){
+    this.locationData.locationCountryCode = this.cDb.dataBaseData[country].iso;
+    this.locationData.locationCountry = country;
+    this.cashedData.newsData = null;
+  }
+
+
   
   //** Resiving hole Location Obj **//
   locationObjDataGeter(): object{

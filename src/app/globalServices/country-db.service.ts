@@ -9,7 +9,12 @@ export interface countryInterface {
 export interface dataBaseInterface {
   germany: countryInterface;
   switzerland: countryInterface;
-  austria: countryInterface;
+  france: countryInterface;
+  'united kingdom': countryInterface;
+  ireland: countryInterface;
+  netherlands: countryInterface;
+  norway: countryInterface;
+  sweden: countryInterface;
 }
 
 export type dataBaseInterfaceArr = countryInterface[];
@@ -91,44 +96,134 @@ export class CountryDbService {
         'Sion'
         ]
     },
-    austria: {
-      name: 'austria',
-      iso: 'at',
+    france: {
+      name: 'france',
+      iso: 'fr',
       cities: [
-        'Vienna',
-        'Graz',
-        'Linz',
-        'Salzburg',
-        'Innsbruck',
-        'Klagenfurt am Wörthersee',
-        'Villach',
-        'Wels',
-        'Sankt Pölten',
-        'Dornbirn',
-        'Wiener Neustadt',
-        'Steyr',
-        'Feldkirch',
-        'Bregenz',
+        'Paris',
+        'Marseille',
+        'Lyon',
+        'Toulouse',
+        'Nice',
+        'Nantes',
+        'Montpellier',
+        'Strasbourg',
+        'Bordeaux',
+        'Lille',
+        'Rennes',
+        'Reims',
+        'Saint-Étienne',
+        'Toulon',
+        'Le Havre',
+        'Grenoble',
+        'Dijon',
+        'Angers',
+        'Nîmes',
+        'Saint-Denis',
+        'Villeurbanne'
+        ]
+    },
+    'united kingdom'	: {
+      name: 'united kingdom',
+      iso: 'gb',
+      cities: [
+        'London',
+        'Birmingham',
+        'Manchester',
+        'Yorkshire',
+        'North East',
+        'Glasgow',
+        'Liverpool',
+        'Cardiff',
+        'Sheffield',
+        'Edinburgh',
+        ]
+    },
+    ireland	: {
+      name: 'ireland',
+      iso: 'ie',
+      cities: [
+        'Dublin',
+        'Cork',
+        'Limerick',
+        'Galway',
+        'Waterford',
+        'Drogheda',
+        'Swords',
+        'Dundalk',
+        'Bray',
+        'Navan',
+        'Kilkenny',
+        'Ennis',
+        'Carlow',
+        'Tralee',
         'Leonding',
-        'Klosterneuburg',
-        'Baden bei Wien',
-        'Wolfsberg',
-        'Leoben',
-        'Krems an der Donau',
-        'Traun'
+        'Newbridge',
+        'Port Laoise',
+        'Balbriggan',
+        'Naas',
+        'Athlone',
+        'Mullingar'
+        ]
+    },
+    netherlands	: {
+      name: 'netherlands',
+      iso: 'nl',
+      cities: [
+        'Amsterdam',
+        'Rotterdam',
+        'The Hague',
+        'Utrecht',
+        'Eindhoven',
+        'Groningen',
+        'Breda',
+        'Tilburg	',
+        'Nijmegen',
+        'Almere',
+        ]
+    },
+    norway: {
+      name: 'norway',
+      iso: 'no',
+      cities: [
+        'Oslo',
+        'Bergen',
+        'Trondheim',
+        'Stavanger',
+        'Kristiansand',
+        'Fredrikstad',
+        'Sandnes',
+        'Tromso',
+        ]
+    },
+    sweden: {
+      name: 'sweden',
+      iso: 'se',
+      cities: [
+        'Stockholm',
+        'Gothenburg',
+        'Malmö',
+        'Uppsala',
+        'Västerås',
+        'Örebro',
+        'Linköping',
+        'Helsingborg',
+        'Jönköping',
+        'Norrköping',
+        'Lund',
+        'Umeå',
+        'Gävle',
+        'Borås',
+        'Södertälje',
+        'Eskilstuna',
+        'Halmstad',
+        'Växjö',
+        'Karlstad',
         ]
     },
   };
   constructor() { }
-  get germanyCities(): string[]{
-    return this.dataBase.germany.cities;
-  }
-  get switzerlandCities(): string[]{
-    return this.dataBase.switzerland.cities;
-  }
-  get austriaCities(): string[]{
-    return this.dataBase.austria.cities;
-  }
+
   get dataBaseData(): dataBaseInterface{
     return this.dataBase;
   }

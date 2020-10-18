@@ -10,13 +10,13 @@ import { environment } from '../../environments/environment';
 })
 export class GnewsApiService {
   location: string;
-  constructor(private http: HttpClient, private globalDbService: GlobalDbService){  }
+  constructor(private http: HttpClient, private globalDb: GlobalDbService){  }
   getNewsData(): Observable<NewsResponse>{
-    this.location = this.globalDbService.locationDataGeter('locationCountryCode');
-    return this.http.get<NewsResponse>(`https://gnews.io/api/v4/top-headlines?&country=de&token=${environment.GNews}`);
+    this.location = this.globalDb.locationDataGeter('locationCountryCode');
+    return this.http.get<NewsResponse>(`https://gnews.io/api/v4/top-headlines?&country=${this.location}&token=${environment.GNews}`);
   }
   getCashedData(): Observable<NewsResponse>{
-    const country = this.globalDbService.locationDataGeter('locationCountryCode');
+    const country = this.globalDb.locationDataGeter('locationCountryCode');
     switch(country.toLowerCase()){
       case 'de':{
         return this.http.get<NewsResponse>('../../assets/chashedGnews/deNews.txt');
