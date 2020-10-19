@@ -18,7 +18,17 @@ export class SettingsManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.countryData = this.countryDb.dataBaseData;
-    this.countryDataArr = this.countryDb.dataBaseDataArr;
+    this.countryDataArr = this.countryDb.dataBaseDataArr.sort(function( a , b ){
+      const nA = a.name.toLowerCase(),
+            nB = b.name.toLowerCase();
+      if( nA < nB ) {
+        return -1;
+      }
+      if( nB < nA ) {
+        return 1;
+      }
+      return 0;
+    });
 
     this.activeCountryData = this.globalDb.locationSpData;
     

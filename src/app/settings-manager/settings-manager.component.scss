@@ -1,8 +1,8 @@
 section{
-    padding: 10rem 1rem 5rem 1rem;
+    padding: 6rem 1rem 5rem 1rem;
 }
 .input-group{
-    margin: 2rem 0;
+    padding: 2rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -12,5 +12,24 @@ section{
     }
     select{
         display: block;
+        padding: .25rem .75rem;
+    }
+    &:not(:last-child){
+        border-bottom: .1rem solid #70707083;
+    }
+}
+.about{
+    .title{
+        padding: 2rem 0;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    p{
+        padding: 0.5rem 0;
+        a{
+            text-decoration: none;
+            color: inherit;
+            font-weight: 700;
+        }
     }
 }
