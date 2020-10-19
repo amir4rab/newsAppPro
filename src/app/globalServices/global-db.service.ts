@@ -76,6 +76,20 @@ export class GlobalDbService {
   //** Chaning location **//
   locarionDataSeter(input: string, locationType: LocationTypes): void{
     this.locationData[locationType] = input;
+    switch(locationType){
+      case 'locationCountry': {
+        this.cashedData.newsData = null;
+        break
+      }
+      case 'locationCountryCode': {
+        this.cashedData.newsData = null;
+        break
+      }
+      case 'locationCity': {
+        this.cashedData.weatherData = null;
+        break
+      }
+    }
   }
 
   //** Chaning location **//

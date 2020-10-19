@@ -232,7 +232,6 @@ export class CountryDbService {
     for(let country in this.dataBase){
       arr.push(this.dataBase[country])
     }
-    console.log(arr);
     return arr;
   }
 }

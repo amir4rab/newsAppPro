@@ -1,11 +1,17 @@
-<div class="news-array">
+<div *ngIf="loaded" class="news-array">
     <div class="title">
         Recent News
     </div>
     <div *ngIf="apiDailyLimited" class="limit-error">
         Unfortunately, my API had reached its daily limit, the following data is from October 2020.
     </div>
+    <div *ngIf="apiErorr" class="limit-error">
+        Unfortunately, Some error has been echoed on the API, the following data is from October 2020.
+    </div>
     <div class="news-card" *ngFor="let news of newsArr">
         <app-news-card [newsObj]=news></app-news-card>
     </div>
+</div>
+<div *ngIf="!loaded" class="loading">
+    <app-loader-animation bgColor="dark"></app-loader-animation>
 </div>

@@ -11,15 +11,16 @@ import { Observable } from 'rxjs';
 export class NewsManagerComponent implements OnInit {
   newsArr: news[];
   offlineCashedMode = false;
-  offlineCashedObserver: Observable<boolean>;
   apiDailyLimited = false;
+  apiErorr = false;
+  loaded = false;
 
   constructor(private gnews: GnewsApiService, private globalDb: GlobalDbService) { }
 
   ngOnInit(): void {
-    // this.globalDb.useingOfflineCashedData.subscribe(res => {
-    //   this.offlineCashedMode = res;
-    // });
+    this.globalDb.useingOfflineCashedData.subscribe(res => {
+      this.offlineCashedMode = res;
+    });
 
     if ( this.globalDb.cashedData.newsData === null ) {
       if( !this.offlineCashedMode ) {
@@ -29,6 +30,7 @@ export class NewsManagerComponent implements OnInit {
       }
     } else {
       this.newsArr = this.globalDb.cashedData.newsData;
+      this.loaded = true;
     }
   }
 
@@ -36,6 +38,7 @@ export class NewsManagerComponent implements OnInit {
     this.gnews.getNewsData().subscribe( res => {
       this.newsArr = res.articles;
       this.globalDb.cashedData.newsData = res.articles;
+      this.loaded = true;
     }, err => {
       switch((err.status).toString()){
         case '429':{
@@ -44,14 +47,17 @@ export class NewsManagerComponent implements OnInit {
           break
         }
         case '500':{
+          this.apiErorr = true;
           this.getCashedData();
           break
         }
         case '503':{
+          this.apiErorr = true;
           this.getCashedData();
           break
         }
         default:{
+          this.apiErorr = true;
           this.getCashedData();
         }
       }
@@ -64,6 +70,7 @@ export class NewsManagerComponent implements OnInit {
     this.gnews.getCashedData().subscribe( res => {
       this.newsArr = res.articles;
       this.globalDb.cashedData.newsData = res.articles;
+      this.loaded = true;
     }, err => {
       console.warn(err);
     });

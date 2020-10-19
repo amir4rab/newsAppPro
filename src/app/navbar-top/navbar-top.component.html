@@ -1,6 +1,6 @@
 <nav *ngIf="activeRout === 'home'">
-    <h2>Today in {{currentCity}}</h2>
-    <app-weather-manager></app-weather-manager>
+    <h2>Today in {{cityName}}</h2>
+    <app-weather-manager *ngIf="pageCheck"></app-weather-manager>
 </nav>
 <nav *ngIf="activeRout === 'settings'">
     <h2>Settings</h2>

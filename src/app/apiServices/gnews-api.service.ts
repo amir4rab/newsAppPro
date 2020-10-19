@@ -12,6 +12,7 @@ export class GnewsApiService {
   location: string;
   constructor(private http: HttpClient, private globalDb: GlobalDbService){  }
   getNewsData(): Observable<NewsResponse>{
+    console.log('Gnews Api has been Called!');
     this.location = this.globalDb.locationDataGeter('locationCountryCode');
     return this.http.get<NewsResponse>(`https://gnews.io/api/v4/top-headlines?&country=${this.location}&token=${environment.GNews}`);
   }

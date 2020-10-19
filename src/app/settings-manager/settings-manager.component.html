@@ -11,8 +11,8 @@
         <div class="label">
             Show news from
         </div>
-        <select name="newsOrigin" id="newsOrigin">
-            <option *ngFor="let city of countryData[slectedCountry].cities" value="country.name" [selected]="city === activeCountryData.locationCity">{{city}}</option>
+        <select name="newsOrigin" id="newsOrigin" (change)="selectCity($event.target)">
+            <option *ngFor="let city of countryData[slectedCountry].cities" [value]="city" [selected]="city === activeCountryData.locationCity">{{city}}</option>
         </select>
     </div>
 </section>

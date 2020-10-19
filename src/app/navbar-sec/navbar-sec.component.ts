@@ -34,6 +34,7 @@ export class NavbarSecComponent implements OnInit {
         case '/': {
           this.activePage = 'home';
           this.globalDb.activeRout.next('home');
+          console.log('/')
           break
         }
         case '/acount':{
