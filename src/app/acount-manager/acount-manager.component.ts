@@ -21,6 +21,7 @@ export class AcountManagerComponent implements OnInit {
 
         this.loading = false;
 
+
       } else {
 
         this.loading = false;
@@ -43,17 +44,22 @@ export class AcountManagerComponent implements OnInit {
     this.logedIn = true;
     this.globalDb.userLogedin = this.logedIn;
 
-    this.globalDb.userData = {
-      name: userData.displayName,
-      email: userData.email,
-      userId: userData.uid
-    }
+    this.globalDb.userData.displayName = userData.displayName;
+    this.globalDb.userData.email = userData.email;
+    this.globalDb.userData.uId = userData.uid;
 
+    this.globalDb.editLoalDatas([
+      {'changedValue': 'displayName','nValue': userData.displayName},
+      {'changedValue': 'email','nValue': userData.email},
+      {'changedValue': 'uId','nValue': userData.uid},
+    ]);
 
   }
+  
   // setData(): void{
   //   this.authService.setData({da:"das"});
   // }
+  
   logout(): void{
     this.authService.signoutAuth();
     this.globalDb.userData = null;

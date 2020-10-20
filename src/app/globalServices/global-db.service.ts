@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { type } from 'os';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { newsArray } from '../interfaces/NewsResponse.interface';
@@ -25,11 +24,14 @@ export class GlobalDbService {
 
   //** setting for page loading animation **//
   userLogedin: boolean = false;
-  userData: {
-    name: string;
-    email: string;
-    userId: string;
-  } = null;
+  userData = {
+    'displayName': null,
+    'email': null,
+    'uId': null,
+    'locationCity': null,
+    'locationCountry': null,
+    'locationCountryCode': null,
+  };
 
   //** setting for page loading animation **//
   loading = new BehaviorSubject<boolean>(false);
@@ -76,12 +78,13 @@ export class GlobalDbService {
   };
 
   constructor(private cDb: CountryDbService) {
-    const userData = this.retrieveUserDataFromSorage();
-    console.log(userData);
-    if( userData !== null ){
-      this.locarionDataSeter(userData.locationCity, 'locationCity');
-      this.locarionDataSeter(userData.locationCountry, 'locationCountry');
-      this.locarionDataSeter(userData.locationCountryCode, 'locationCountryCode');
+    const userLocalData = this.retrieveUserDataFromSorage();
+    console.log(userLocalData);
+    if( userLocalData !== null ){
+      this.locarionDataSeter(userLocalData.locationCity, 'locationCity');
+      this.locarionDataSeter(userLocalData.locationCountry, 'locationCountry');
+      this.locarionDataSeter(userLocalData.locationCountryCode, 'locationCountryCode');
+      this.userData = userLocalData;
     } else {
       //** Default settings **//
       this.setUserDataToStorage({
@@ -129,8 +132,8 @@ export class GlobalDbService {
     this.cashedData.newsData = null;
 
     this.editLoalDatas([
-      {changedValue: 'locationCountry', nValue: this.cDb.dataBaseData[country].iso },
-      {changedValue: 'locationCountryCode', nValue: country }
+      {changedValue: 'locationCountry', nValue: country },
+      {changedValue: 'locationCountryCode', nValue: this.cDb.dataBaseData[country].iso }
     ]);
   }
 
@@ -160,6 +163,11 @@ export class GlobalDbService {
     localStorage.setItem('userdata', JSON.stringify(data));
   }
 
+  //** Remove user data from Localstorage **//
+  removeUserDataFromStorage(): void{
+    localStorage.removeItem('userdata');
+  }
+
   //** Retrieveing user data from Localstorage **//
   retrieveUserDataFromSorage(): userObjData{
     const localData = localStorage.getItem('userdata');
@@ -173,6 +181,7 @@ export class GlobalDbService {
     data[changedValue] = nValue;
     this.setUserDataToStorage(data);
   }
+
   //** Editing user datas in Localstorage **//
   editLoalDatas(dataArr: {changedValue: userObjValues, nValue: string}[]): void{
     const data: userObjData  = this.retrieveUserDataFromSorage();

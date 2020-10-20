@@ -6,6 +6,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 
 import { auth, User } from 'firebase/app';
 import { Observable } from 'rxjs';
+import { GlobalDbService } from '../globalServices/global-db.service';
 
 interface AuthCredential {
   a: null;
@@ -19,7 +20,7 @@ interface AuthCredential {
 })
 export class GoogleAuthService {
   
-  constructor(private fireAuth: AngularFireAuth, private fireDatabase: AngularFireDatabase) { 
+  constructor(private fireAuth: AngularFireAuth, private fireDatabase: AngularFireDatabase, private globalDb: GlobalDbService) { 
     // this.fireAuth.setPersistence('local');
   }
 
@@ -30,16 +31,17 @@ export class GoogleAuthService {
   }
 
   signoutAuth(): void{
-    this.fireAuth.signOut().then(res=>console.log(res))
+    this.fireAuth.signOut().then(res=>console.log(res));
+    this.globalDb.removeUserDataFromStorage();
   }
   // loginAutoAuth(credential: AuthCredential): Promise<any>{
   //   return this.fireAuth.signInWithCredential(credential);
   // }
 
-  setData(rawData: object, uId: string): void{
+  setData(rawData: object, uId: string): Promise<any>{
     const itemRef = this.fireDatabase.object(uId);
     const data = {...rawData}
-    itemRef.set(data).then(res => console.log('fireDatabase has been used')).catch(err => console.warn(err));
+    return itemRef.set(data);
   }
 
   checkForLogin(): Observable<User>{
