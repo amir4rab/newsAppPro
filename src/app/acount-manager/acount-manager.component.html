@@ -1,4 +1,4 @@
-<section>
+<section *ngIf="!loading">
     <div class="login-section" *ngIf="!logedIn">
         <button (click)="loginBtn()" class="g-login">
             <p>
@@ -7,5 +7,13 @@
             </p>
         </button>
     </div>
+    <div class="user-area" *ngIf="logedIn">
+        <button (click)="logout()">
+            Logout
+        </button>
+    </div>
 </section>
+<div *ngIf="loading" class="loading">
+    <app-loader-animation bgColor="dark"></app-loader-animation>
+</div>
 

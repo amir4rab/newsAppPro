@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { type } from 'os';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { newsArray } from '../interfaces/NewsResponse.interface';
@@ -6,6 +7,16 @@ import { WeatherResponse } from '../interfaces/WeatherResponse.interface';
 import { CountryDbService } from './country-db.service';
 
 type LocationTypes = 'locationCity' | 'locationCountry' | 'locationCountryCode';
+
+export type userObjData = {
+  'displayName': string,
+  'email': string,
+  'uId': string,
+  'locationCity': string,
+  'locationCountry': string,
+  'locationCountryCode': string,
+}
+type userObjValues =  'displayName' | 'email' | 'uId' | 'locationCity' | 'locationCountry' | 'locationCountryCode';
 
 @Injectable({
   providedIn: 'root'
@@ -65,17 +76,35 @@ export class GlobalDbService {
   };
 
   constructor(private cDb: CountryDbService) {
-
-    //** Default settings **//
-    this.locarionDataSeter('Berlin', 'locationCity');
-    this.locarionDataSeter('germany', 'locationCountry');
-    this.locarionDataSeter('de', 'locationCountryCode');
+    const userData = this.retrieveUserDataFromSorage();
+    console.log(userData);
+    if( userData !== null ){
+      this.locarionDataSeter(userData.locationCity, 'locationCity');
+      this.locarionDataSeter(userData.locationCountry, 'locationCountry');
+      this.locarionDataSeter(userData.locationCountryCode, 'locationCountryCode');
+    } else {
+      //** Default settings **//
+      this.setUserDataToStorage({
+        'displayName': null,
+        'email': null,
+        'uId': null,
+        'locationCity': null,
+        'locationCountry': null,
+        'locationCountryCode': null,
+      })
+      this.locarionDataSeter('Berlin', 'locationCity');
+      this.locarionDataSeter('germany', 'locationCountry');
+      this.locarionDataSeter('de', 'locationCountryCode');
+    }
 
   }
 
   //** Chaning location **//
   locarionDataSeter(input: string, locationType: LocationTypes): void{
     this.locationData[locationType] = input;
+
+    this.editLoalData(locationType, input);
+
     switch(locationType){
       case 'locationCountry': {
         this.cashedData.newsData = null;
@@ -95,8 +124,14 @@ export class GlobalDbService {
   //** Chaning location **//
   set locarionCountrySeter(country: string){
     this.locationData.locationCountryCode = this.cDb.dataBaseData[country].iso;
+    
     this.locationData.locationCountry = country;
     this.cashedData.newsData = null;
+
+    this.editLoalDatas([
+      {changedValue: 'locationCountry', nValue: this.cDb.dataBaseData[country].iso },
+      {changedValue: 'locationCountryCode', nValue: country }
+    ]);
   }
 
 
@@ -120,4 +155,30 @@ export class GlobalDbService {
     return this.locationData[locationType];
   }
 
+  //** Setting user data to Localstorage **//
+  setUserDataToStorage(data: userObjData): void{
+    localStorage.setItem('userdata', JSON.stringify(data));
+  }
+
+  //** Retrieveing user data from Localstorage **//
+  retrieveUserDataFromSorage(): userObjData{
+    const localData = localStorage.getItem('userdata');
+    const localDataJson = JSON.parse(localData);
+    return localDataJson;
+  }
+
+  //** Editing user data in Localstorage **//
+  editLoalData(changedValue: userObjValues, nValue: string): void{
+    const data: userObjData  = this.retrieveUserDataFromSorage();
+    data[changedValue] = nValue;
+    this.setUserDataToStorage(data);
+  }
+  //** Editing user datas in Localstorage **//
+  editLoalDatas(dataArr: {changedValue: userObjValues, nValue: string}[]): void{
+    const data: userObjData  = this.retrieveUserDataFromSorage();
+    dataArr.forEach(change => {
+      data[change.changedValue] = change.nValue;
+    });
+    this.setUserDataToStorage(data);
+  }
 }
