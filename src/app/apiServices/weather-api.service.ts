@@ -15,7 +15,6 @@ export class WeatherApiService {
   }
 
   getData(): Observable<WeatherResponse>{
-    console.log(`Openweathermap api has been called!`,this.location);
     this.location = this.globalDb.locationObjDataGeter.locationCity;
     return  this.http.get<WeatherResponse>(`https://api.openweathermap.org/data/2.5/weather?q=${this.location}&units=${this.unit}&appid=${environment.openweathermapKey}`);
   }

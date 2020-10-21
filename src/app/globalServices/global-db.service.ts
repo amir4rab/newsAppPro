@@ -31,6 +31,7 @@ export class GlobalDbService {
 
   //** setting for page loading animation **//
   userLogedin: boolean = false;
+  userDataHasBeenChanged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _userData: userObjData = {
     'displayName': null,
     'email': null,
@@ -150,16 +151,13 @@ export class GlobalDbService {
     let userLocalData = JSON.parse(localData);
 
     if( userLocalData !== null && userLocalData.locationData.locationCity === null ){
-      console.log('case 1');
       this.locarionDataSeter(userLocalData.locationCity, 'locationCity', false);
       this.locarionDataSeter(userLocalData.locationCountry, 'locationCountry', false);
       this.locarionDataSeter(userLocalData.locationCountryCode, 'locationCountryCode', false);
       this._userData = userLocalData;
     } else if ( userLocalData !== null && userLocalData.locationCity !== null  ) {
-      console.log('case 2');
       this._userData = userLocalData;
     } else {
-      console.log('case 3');
       userLocalData = this.initLocalStorage();
     }
 

@@ -14,9 +14,7 @@ export class GnewsApiService {
 
   }
   getNewsData(): Observable<NewsResponse>{
-    console.log('Gnews Api has been Called!');
     this.location = this.globalDb.locationObjDataGeter.locationCountryCode;
-    console.log(this.location);
     return this.http.get<NewsResponse>(`https://gnews.io/api/v4/top-headlines?&country=${this.location}&token=${environment.GNews}`);
   }
   getCashedData(): Observable<NewsResponse>{

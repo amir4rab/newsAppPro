@@ -12,7 +12,8 @@ import { User } from 'firebase';
 export class AcountManagerComponent implements OnInit {
   logedIn: boolean = false;
   loading: boolean = true;
-  backUpCompleted: boolean = false;
+  backUpCompleted: boolean = true;
+  dataHasBeenSynced: boolean = true;
   userdisplayName: string;
   constructor(private authService: GoogleAuthService, public globalDb: GlobalDbService) { }
 
@@ -31,6 +32,11 @@ export class AcountManagerComponent implements OnInit {
     }, err => {
       this.loading = false;
     });
+
+    this.globalDb.userDataHasBeenChanged.subscribe(res=>{
+      this.dataHasBeenSynced = res;
+    })
+
     this.logedIn = this.globalDb.userLogedin;
   }
 

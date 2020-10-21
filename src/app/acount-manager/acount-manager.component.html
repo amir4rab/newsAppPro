@@ -12,8 +12,12 @@
             Wellcome {{userdisplayName}}
         </div>
         <div class="back-up">
-            <div class="success" *ngIf="backUpCompleted">
-                your data is backed up to the cloud
+            <div *ngIf="backUpCompleted && dataHasBeenSynced">
+                your data is backed up to the cloud.
+            </div>
+            <div *ngIf="backUpCompleted && !dataHasBeenSynced">
+                <p>your data is <strong>not backed up</strong> to the cloud.</p>
+                <button>back up</button>
             </div>
             <div class="loading" *ngIf="!backUpCompleted">
                 <app-loader-animation bgColor="dark"></app-loader-animation>
