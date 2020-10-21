@@ -8,9 +8,24 @@
         </button>
     </div>
     <div class="user-area" *ngIf="logedIn">
-        <button (click)="logout()">
-            Logout
+        <div class="title">
+            Wellcome {{userdisplayName}}
+        </div>
+        <div class="back-up">
+            <div class="success" *ngIf="backUpCompleted">
+                your data is backed up to the cloud
+            </div>
+            <div class="loading" *ngIf="!backUpCompleted">
+                <app-loader-animation bgColor="dark"></app-loader-animation>
+            </div>
+        </div>
+        <hr>
+        <button class="danger" (click)="logout()">
+            Sing out
         </button>
+        <div class="warning">
+            Sing out will delete all of your local cash
+        </div>
     </div>
 </section>
 <div *ngIf="loading" class="loading">

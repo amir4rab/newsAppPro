@@ -31,6 +31,6 @@ export class NavbarTopComponent implements OnInit {
   }
   get cityName(): string{
     this.getWeather = true;
-    return this.globalDb.locationDataGeter('locationCity');
+    return this.globalDb.locationObjDataGeter.locationCity;
   }
 }

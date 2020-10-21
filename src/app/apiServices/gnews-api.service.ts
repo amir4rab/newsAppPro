@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GlobalDbService } from '../globalServices/global-db.service';
+import { GlobalDbService, locationData } from '../globalServices/global-db.service';
 import { NewsResponse } from '../interfaces/NewsResponse.interface';
 import { environment } from '../../environments/environment';
 
@@ -10,10 +10,13 @@ import { environment } from '../../environments/environment';
 })
 export class GnewsApiService {
   location: string;
-  constructor(private http: HttpClient, private globalDb: GlobalDbService){  }
+  constructor(private http: HttpClient, private globalDb: GlobalDbService){ 
+
+  }
   getNewsData(): Observable<NewsResponse>{
     console.log('Gnews Api has been Called!');
-    this.location = this.globalDb.locationDataGeter('locationCountryCode');
+    this.location = this.globalDb.locationObjDataGeter.locationCountryCode;
+    console.log(this.location);
     return this.http.get<NewsResponse>(`https://gnews.io/api/v4/top-headlines?&country=${this.location}&token=${environment.GNews}`);
   }
   getCashedData(): Observable<NewsResponse>{

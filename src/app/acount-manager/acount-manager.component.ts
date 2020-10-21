@@ -12,7 +12,9 @@ import { User } from 'firebase';
 export class AcountManagerComponent implements OnInit {
   logedIn: boolean = false;
   loading: boolean = true;
-  constructor(private authService: GoogleAuthService, private globalDb: GlobalDbService) { }
+  backUpCompleted: boolean = false;
+  userdisplayName: string;
+  constructor(private authService: GoogleAuthService, public globalDb: GlobalDbService) { }
 
   ngOnInit(): void {
     this.authService.checkForLogin().subscribe( res => {
@@ -34,25 +36,28 @@ export class AcountManagerComponent implements OnInit {
 
   loginBtn(): void{
     this.authService.loginAuth().then( res => {
-      this.setUserData(res);
+      this.setUserData(res.user);
+
+      this.authService.fetchData(res.user.uid).subscribe(res=>{
+        if(res === null){
+        }
+      })
     }).catch(err => console.warn(err));
   }
   
   setUserData ( userData: User ): void {
-    console.log(userData);
 
-    this.logedIn = true;
     this.globalDb.userLogedin = this.logedIn;
-
-    this.globalDb.userData.displayName = userData.displayName;
-    this.globalDb.userData.email = userData.email;
-    this.globalDb.userData.uId = userData.uid;
-
+    
+    this.logedIn = true;
+    
     this.globalDb.editLoalDatas([
       {'changedValue': 'displayName','nValue': userData.displayName},
       {'changedValue': 'email','nValue': userData.email},
       {'changedValue': 'uId','nValue': userData.uid},
     ]);
+    
+    this.userdisplayName = userData.displayName;
 
   }
   
@@ -61,6 +66,7 @@ export class AcountManagerComponent implements OnInit {
   // }
   
   logout(): void{
+    this.globalDb.userLogedin = false;
     this.authService.signoutAuth();
     this.globalDb.userData = null;
     this.logedIn = false;

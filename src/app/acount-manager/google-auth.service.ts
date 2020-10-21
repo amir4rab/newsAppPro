@@ -8,13 +8,6 @@ import { auth, User } from 'firebase/app';
 import { Observable } from 'rxjs';
 import { GlobalDbService } from '../globalServices/global-db.service';
 
-interface AuthCredential {
-  a: null;
-  accessToken: string;
-  idToken: string;
-  providerId: string;
-  signInMethod: string;
-}
 @Injectable({
   providedIn: 'root'
 })
@@ -24,7 +17,7 @@ export class GoogleAuthService {
     // this.fireAuth.setPersistence('local');
   }
 
-  loginAuth(): Promise<any>{
+  async loginAuth(): Promise<any>{
     return this.fireAuth.setPersistence('local').then(_=>{ 
       return this.fireAuth.signInWithPopup(new auth.GoogleAuthProvider());
     })
@@ -38,13 +31,26 @@ export class GoogleAuthService {
   //   return this.fireAuth.signInWithCredential(credential);
   // }
 
+  
+  checkForLogin(): Observable<User>{
+    return this.fireAuth.user;
+  }
+
   setData(rawData: object, uId: string): Promise<any>{
     const itemRef = this.fireDatabase.object(uId);
     const data = {...rawData}
     return itemRef.set(data);
   }
 
-  checkForLogin(): Observable<User>{
-    return this.fireAuth.user;
+  fetchData(uId: string){
+    return this.fireDatabase.list('userData/' + uId).valueChanges();
+  }
+
+  setUserDataToFireBaseDb(uId: string,rawData: object): void{
+    // this.fireDatabase.list('userData/' + uId).valueChanges().subscribe(res=>console.log(res),err=>console.warn(err));
+
+    const itemRef = this.fireDatabase.object(uId);
+    const data = {...rawData}
+    itemRef.set(data).then(res => console.log(res)).catch(err => console.warn(err));
   }
 }

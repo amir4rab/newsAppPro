@@ -1,5 +1,5 @@
 section{
-    padding: 10rem 1rem 5rem 1rem;
+    padding: 7rem 1rem 5rem 1rem;
 }
 .login-section{
     display: flex;
@@ -28,4 +28,21 @@ section{
     justify-content: center;
     align-items: center;
     align-content: center;
+}
+.user-area{
+    .title{
+        font-weight: 700;
+        padding-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+    .back-up{
+        padding: 1rem 0;
+    }
+    hr{
+        margin: 1rem 0;
+    }
+    .warning{
+        color: #e24e33;
+        padding: 1rem 0;
+    }
 }

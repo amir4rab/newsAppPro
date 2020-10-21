@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { GoogleAuthService } from '../acount-manager/google-auth.service';
 
 import { newsArray } from '../interfaces/NewsResponse.interface';
 import { WeatherResponse } from '../interfaces/WeatherResponse.interface';
@@ -11,10 +12,16 @@ export type userObjData = {
   'displayName': string,
   'email': string,
   'uId': string,
+  'locationData': locationData
+}
+export type locationData = {
   'locationCity': string,
   'locationCountry': string,
   'locationCountryCode': string,
 }
+
+
+
 type userObjValues =  'displayName' | 'email' | 'uId' | 'locationCity' | 'locationCountry' | 'locationCountryCode';
 
 @Injectable({
@@ -24,14 +31,17 @@ export class GlobalDbService {
 
   //** setting for page loading animation **//
   userLogedin: boolean = false;
-  userData = {
+  private _userData: userObjData = {
     'displayName': null,
     'email': null,
     'uId': null,
-    'locationCity': null,
-    'locationCountry': null,
-    'locationCountryCode': null,
+    'locationData':{
+      'locationCity': null,
+      'locationCountry': null,
+      'locationCountryCode': null,
+    }
   };
+  userData: Subject<userObjData> = new Subject<userObjData>();
 
   //** setting for page loading animation **//
   loading = new BehaviorSubject<boolean>(false);
@@ -58,55 +68,23 @@ export class GlobalDbService {
   activeRout = new Subject<string>();
   
   //** setting for cashing Api data in page Changes **//
-  cashedData: {
-    newsData: newsArray | null,
-    weatherData: WeatherResponse | null,
-  } = {
-    newsData: null,
-    weatherData: null,
-  };
-
-  //** setting for Storing Data that used in Application **//
-  private locationData: {
-    locationCity: string,
-    locationCountry: string,
-    locationCountryCode: string,
-  } = {
-    locationCity: null,
-    locationCountry: null,
-    locationCountryCode: null,
-  };
+  cashedData: { newsData: newsArray | null , weatherData: WeatherResponse | null } = { newsData: null , weatherData: null };
 
   constructor(private cDb: CountryDbService) {
-    const userLocalData = this.retrieveUserDataFromSorage();
-    console.log(userLocalData);
-    if( userLocalData !== null ){
-      this.locarionDataSeter(userLocalData.locationCity, 'locationCity');
-      this.locarionDataSeter(userLocalData.locationCountry, 'locationCountry');
-      this.locarionDataSeter(userLocalData.locationCountryCode, 'locationCountryCode');
-      this.userData = userLocalData;
-    } else {
-      //** Default settings **//
-      this.setUserDataToStorage({
-        'displayName': null,
-        'email': null,
-        'uId': null,
-        'locationCity': null,
-        'locationCountry': null,
-        'locationCountryCode': null,
-      })
-      this.locarionDataSeter('Berlin', 'locationCity');
-      this.locarionDataSeter('germany', 'locationCountry');
-      this.locarionDataSeter('de', 'locationCountryCode');
-    }
-
+    this._userData = this.retrieveUserDataFromSorage();
+    this.userData.next(this._userData);
   }
 
-  //** Chaning location **//
-  locarionDataSeter(input: string, locationType: LocationTypes): void{
-    this.locationData[locationType] = input;
+  //** Changing location **//
+  locarionDataSeter(input: string, locationType: userObjValues, toLocal: boolean = true): void{
+    console.log(this._userData.locationData.locationCity, input);
+    this._userData.locationData[locationType] = input;
+    this.userData.next(this._userData);
 
-    this.editLoalData(locationType, input);
+    if (toLocal) {
+      console.log('to local')
+      this.editLoalData(locationType, input, true);
+    }
 
     switch(locationType){
       case 'locationCountry': {
@@ -126,9 +104,11 @@ export class GlobalDbService {
 
   //** Chaning location **//
   set locarionCountrySeter(country: string){
-    this.locationData.locationCountryCode = this.cDb.dataBaseData[country].iso;
+    this._userData.locationData.locationCountryCode = this.cDb.dataBaseData[country].iso;
     
-    this.locationData.locationCountry = country;
+    this._userData.locationData.locationCountry = country;
+    this.userData.next(this._userData);
+    
     this.cashedData.newsData = null;
 
     this.editLoalDatas([
@@ -140,22 +120,18 @@ export class GlobalDbService {
 
   
   //** Resiving hole Location Obj **//
-  locationObjDataGeter(): object{
-    return this.locationData;
+  get locationObjDataGeter(): locationData{
+    return this._userData.locationData;
   }
 
   //** Resetting hole location data **//
-  get locationSpData(): {
-    locationCity: string,
-    locationCountry: string,
-    locationCountryCode: string,
-  }{
-    return this.locationData;
+  get locationSpData(): locationData{
+    return this._userData.locationData;
   }
 
   //** Resetting part of location data **//
   locationDataGeter(locationType: LocationTypes): string{
-    return this.locationData[locationType];
+    return this.userData[locationType];
   }
 
   //** Setting user data to Localstorage **//
@@ -171,14 +147,34 @@ export class GlobalDbService {
   //** Retrieveing user data from Localstorage **//
   retrieveUserDataFromSorage(): userObjData{
     const localData = localStorage.getItem('userdata');
-    const localDataJson = JSON.parse(localData);
-    return localDataJson;
+    let userLocalData = JSON.parse(localData);
+
+    if( userLocalData !== null && userLocalData.locationData.locationCity === null ){
+      console.log('case 1');
+      this.locarionDataSeter(userLocalData.locationCity, 'locationCity', false);
+      this.locarionDataSeter(userLocalData.locationCountry, 'locationCountry', false);
+      this.locarionDataSeter(userLocalData.locationCountryCode, 'locationCountryCode', false);
+      this._userData = userLocalData;
+    } else if ( userLocalData !== null && userLocalData.locationCity !== null  ) {
+      console.log('case 2');
+      this._userData = userLocalData;
+    } else {
+      console.log('case 3');
+      userLocalData = this.initLocalStorage();
+    }
+
+    return userLocalData;
   }
 
   //** Editing user data in Localstorage **//
-  editLoalData(changedValue: userObjValues, nValue: string): void{
+  editLoalData(changedValue: userObjValues, nValue: string, isLocation:boolean = false): void{
     const data: userObjData  = this.retrieveUserDataFromSorage();
-    data[changedValue] = nValue;
+    if ( !isLocation ) {
+      data[changedValue] = nValue;
+    } else {
+      data.locationData[changedValue] = nValue;
+    }
+    this._userData = data;
     this.setUserDataToStorage(data);
   }
 
@@ -186,8 +182,26 @@ export class GlobalDbService {
   editLoalDatas(dataArr: {changedValue: userObjValues, nValue: string}[]): void{
     const data: userObjData  = this.retrieveUserDataFromSorage();
     dataArr.forEach(change => {
-      data[change.changedValue] = change.nValue;
+      data.locationData[change.changedValue] = change.nValue;
+      this.userData[change.changedValue] = change.nValue;
     });
     this.setUserDataToStorage(data);
+  }
+
+  //** Init local data **/
+  initLocalStorage(): userObjData{
+    //** Default settings **//
+    const defaultValues = {
+      'displayName': null,
+      'email': null,
+      'uId': null,
+      locationData:{
+        'locationCity': 'Berlin',
+        'locationCountry': 'germany',
+        'locationCountryCode': 'de',
+      }
+    }
+    localStorage.setItem('userdata',JSON.stringify(defaultValues));
+    return defaultValues;
   }
 }
