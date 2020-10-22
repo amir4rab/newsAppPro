@@ -75,16 +75,13 @@ export class GlobalDbService {
 
   constructor(private cDb: CountryDbService) {
     this._userData = this.retrieveUserDataFromSorage();
-    console.log('pass here!');
   }
 
   //** Changing location **//
   locarionDataSeter(input: string, locationType: userObjValues, toLocal: boolean = true): void{
-    console.log(this._userData.locationData.locationCity, input);
     this._userData.locationData[locationType] = input;
 
     if (toLocal) {
-      console.log('to local')
       this.editLoalData(locationType, input, true);
     }
 

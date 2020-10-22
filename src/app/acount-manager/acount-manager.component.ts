@@ -42,11 +42,9 @@ export class AcountManagerComponent implements OnInit {
       this.setUserData(res.user);
       this.authService.fetchData(res.user.uid).subscribe(res=>{
         if(res.length !== 0){
-          console.log(res);
           this.globalDb.initLocalDataFromCloud(res);
           this.globalDb.userDataHasBeenChanged.next(true);
         }
-        console.log(res);
       })
     });
   }
