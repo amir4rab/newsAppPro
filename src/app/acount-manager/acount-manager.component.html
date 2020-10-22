@@ -17,7 +17,7 @@
             </div>
             <div *ngIf="backUpCompleted && !dataHasBeenSynced">
                 <p>your data is <strong>not backed up</strong> to the cloud.</p>
-                <button>back up</button>
+                <button class="dark" (click)="backupData()">back up</button>
             </div>
             <div class="loading" *ngIf="!backUpCompleted">
                 <app-loader-animation bgColor="dark"></app-loader-animation>

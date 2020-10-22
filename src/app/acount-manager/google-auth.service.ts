@@ -5,8 +5,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 
 import { auth, User } from 'firebase/app';
+import { promise } from 'protractor';
 import { Observable } from 'rxjs';
-import { GlobalDbService } from '../globalServices/global-db.service';
+import { GlobalDbService, userObjData } from '../globalServices/global-db.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,19 +39,17 @@ export class GoogleAuthService {
 
   setData(rawData: object, uId: string): Promise<any>{
     const itemRef = this.fireDatabase.object(uId);
-    const data = {...rawData}
+    const data = rawData;
     return itemRef.set(data);
   }
 
-  fetchData(uId: string){
-    return this.fireDatabase.list('userData/' + uId).valueChanges();
+  fetchData(uId: string): Observable<any>{
+    return this.fireDatabase.object('userData/' + uId).valueChanges();
   }
 
-  setUserDataToFireBaseDb(uId: string,rawData: object): void{
-    // this.fireDatabase.list('userData/' + uId).valueChanges().subscribe(res=>console.log(res),err=>console.warn(err));
-
-    const itemRef = this.fireDatabase.object(uId);
-    const data = {...rawData}
-    itemRef.set(data).then(res => console.log(res)).catch(err => console.warn(err));
+  setUserDataToFireBaseDb(rawData: userObjData): Promise<any>{
+    const itemRef = this.fireDatabase.object(`userData/` + rawData.uId);
+    const data = rawData;
+    return itemRef.set(data);
   }
 }

@@ -42,7 +42,9 @@ export class GlobalDbService {
       'locationCountryCode': null,
     }
   };
-  userData: Subject<userObjData> = new Subject<userObjData>();
+  get userDataGet(): userObjData{
+    return this._userData;
+  };
 
   //** setting for page loading animation **//
   loading = new BehaviorSubject<boolean>(false);
@@ -73,14 +75,13 @@ export class GlobalDbService {
 
   constructor(private cDb: CountryDbService) {
     this._userData = this.retrieveUserDataFromSorage();
-    this.userData.next(this._userData);
+    console.log('pass here!');
   }
 
   //** Changing location **//
   locarionDataSeter(input: string, locationType: userObjValues, toLocal: boolean = true): void{
     console.log(this._userData.locationData.locationCity, input);
     this._userData.locationData[locationType] = input;
-    this.userData.next(this._userData);
 
     if (toLocal) {
       console.log('to local')
@@ -108,14 +109,13 @@ export class GlobalDbService {
     this._userData.locationData.locationCountryCode = this.cDb.dataBaseData[country].iso;
     
     this._userData.locationData.locationCountry = country;
-    this.userData.next(this._userData);
     
     this.cashedData.newsData = null;
 
     this.editLoalDatas([
       {changedValue: 'locationCountry', nValue: country },
       {changedValue: 'locationCountryCode', nValue: this.cDb.dataBaseData[country].iso }
-    ]);
+    ], true);
   }
 
 
@@ -132,7 +132,7 @@ export class GlobalDbService {
 
   //** Resetting part of location data **//
   locationDataGeter(locationType: LocationTypes): string{
-    return this.userData[locationType];
+    return this._userData[locationType];
   }
 
   //** Setting user data to Localstorage **//
@@ -157,6 +157,8 @@ export class GlobalDbService {
       this._userData = userLocalData;
     } else if ( userLocalData !== null && userLocalData.locationCity !== null  ) {
       this._userData = userLocalData;
+    } else if ( userLocalData === null ){
+      userLocalData = this.initLocalStorage();
     } else {
       userLocalData = this.initLocalStorage();
     }
@@ -177,11 +179,15 @@ export class GlobalDbService {
   }
 
   //** Editing user datas in Localstorage **//
-  editLoalDatas(dataArr: {changedValue: userObjValues, nValue: string}[]): void{
+  editLoalDatas(dataArr: {changedValue: userObjValues, nValue: string}[], isLocation: boolean = false): void{
     const data: userObjData  = this.retrieveUserDataFromSorage();
     dataArr.forEach(change => {
-      data.locationData[change.changedValue] = change.nValue;
-      this.userData[change.changedValue] = change.nValue;
+      if(isLocation){
+        data.locationData[change.changedValue] = change.nValue;
+      } else {
+        data[change.changedValue] = change.nValue;
+      }
+      this._userData[change.changedValue] = change.nValue;
     });
     this.setUserDataToStorage(data);
   }
@@ -201,5 +207,10 @@ export class GlobalDbService {
     }
     localStorage.setItem('userdata',JSON.stringify(defaultValues));
     return defaultValues;
+  }
+
+  initLocalDataFromCloud(data: userObjData): void{
+    this._userData = data;
+    localStorage.setItem('userdata',JSON.stringify(data));
   }
 }

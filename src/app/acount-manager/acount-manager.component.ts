@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GoogleAuthService } from './google-auth.service';
 
-import { GlobalDbService } from '../globalServices/global-db.service';
+import { GlobalDbService, userObjData } from '../globalServices/global-db.service';
 import { User } from 'firebase';
 
 @Component({
@@ -21,15 +21,12 @@ export class AcountManagerComponent implements OnInit {
     this.authService.checkForLogin().subscribe( res => {
       if ( res !== null && !this.logedIn ) {
         this.setUserData(res);
-
+        this.globalDb.userDataHasBeenChanged.next(true);
         this.loading = false;
-
-
       } else {
-
         this.loading = false;
       }
-    }, err => {
+    }, _ => {
       this.loading = false;
     });
 
@@ -43,25 +40,27 @@ export class AcountManagerComponent implements OnInit {
   loginBtn(): void{
     this.authService.loginAuth().then( res => {
       this.setUserData(res.user);
-
       this.authService.fetchData(res.user.uid).subscribe(res=>{
-        if(res === null){
+        if(res.length !== 0){
+          console.log(res);
+          this.globalDb.initLocalDataFromCloud(res);
+          this.globalDb.userDataHasBeenChanged.next(true);
         }
+        console.log(res);
       })
-    }).catch(err => console.warn(err));
+    });
   }
   
   setUserData ( userData: User ): void {
 
-    this.globalDb.userLogedin = this.logedIn;
-    
+    this.globalDb.userLogedin = true;
     this.logedIn = true;
-    
+
     this.globalDb.editLoalDatas([
       {'changedValue': 'displayName','nValue': userData.displayName},
       {'changedValue': 'email','nValue': userData.email},
       {'changedValue': 'uId','nValue': userData.uid},
-    ]);
+    ], false);
     
     this.userdisplayName = userData.displayName;
 
@@ -74,7 +73,18 @@ export class AcountManagerComponent implements OnInit {
   logout(): void{
     this.globalDb.userLogedin = false;
     this.authService.signoutAuth();
-    this.globalDb.userData = null;
     this.logedIn = false;
+  }
+
+  backupData(): void{
+    this.backUpCompleted = false;
+
+    this.authService.setUserDataToFireBaseDb(this.globalDb.userDataGet).then(
+      res =>{
+        this.dataHasBeenSynced = true;
+        this.backUpCompleted = true;
+        console.log(res)
+      }
+    )
   }
 }
