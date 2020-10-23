@@ -41,7 +41,7 @@ export class AcountManagerComponent implements OnInit {
     this.authService.loginAuth().then( res => {
       this.setUserData(res.user);
       this.authService.fetchData(res.user.uid).subscribe(res=>{
-        if(res.length !== 0){
+        if(res !== null){
           this.globalDb.initLocalDataFromCloud(res);
           this.globalDb.userDataHasBeenChanged.next(true);
         }
