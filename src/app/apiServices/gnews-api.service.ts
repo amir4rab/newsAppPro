@@ -24,6 +24,10 @@ export class GnewsApiService {
         return this.http.get<NewsResponse>('../../assets/chashedGnews/deNews.txt');
         break
       }
+      default: {
+        return this.http.get<NewsResponse>('../../assets/chashedGnews/deNews.txt');
+        break
+      }
     }
   }
 }
