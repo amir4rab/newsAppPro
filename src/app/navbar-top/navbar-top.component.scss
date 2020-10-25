@@ -8,3 +8,12 @@ nav{
         font-size: 2.25rem;
     }
 }
+@media ( min-width: 1200px) and (min-height: 700px){
+    nav{
+        display: flex;
+        justify-content: space-between;
+        h2{
+            font-size: 3.5rem;
+        }
+    }
+}

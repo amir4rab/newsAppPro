@@ -129,7 +129,7 @@ export class GlobalDbService {
 
   //** Resetting part of location data **//
   locationDataGeter(locationType: LocationTypes): string{
-    return this._userData[locationType];
+    return this._userData.locationData[locationType];
   }
 
   //** Setting user data to Localstorage **//

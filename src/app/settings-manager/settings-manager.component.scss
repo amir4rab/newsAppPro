@@ -33,3 +33,10 @@ section{
         }
     }
 }
+@media ( min-width: 1200px) and (min-height: 700px){
+    section{
+        padding: 8rem 1rem 5rem 1rem;
+        width: 80vw;
+        margin: 0 5vw 0 15vw;
+    }
+}

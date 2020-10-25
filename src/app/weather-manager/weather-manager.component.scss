@@ -9,10 +9,29 @@
         font-weight: 700;
         position: relative;
     }
+    .details{
+        display: flex;
+    }
     .status{
         padding-right: .75rem;
     }
     .status,.feels-like{
         padding-bottom: .65rem;
+    }
+}
+@media ( min-width: 1200px) and (min-height: 700px){
+    .weather-card{
+        padding-top: 0;
+        flex-direction: row-reverse;
+        .temp{
+            font-size: 3.5rem;
+        }
+        .details{
+            display: flex;
+            flex-direction: column;
+            .status,.feels-like{
+                padding-bottom: .6rem;
+            }
+        }
     }
 }

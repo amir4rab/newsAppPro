@@ -42,6 +42,7 @@ export class NewsManagerComponent implements OnInit {
     }, err => {
       switch((err.status).toString()){
         case '429':{
+          console.log('cashed mode!');
           this.apiDailyLimited = true;
           this.getCashedData();
           break
@@ -68,6 +69,7 @@ export class NewsManagerComponent implements OnInit {
     this.globalDb.offlineCashedDataState = true;
 
     this.gnews.getCashedData().subscribe( res => {
+      console.log(res);
       this.newsArr = res.articles;
       this.globalDb.cashedData.newsData = res.articles;
       this.loaded = true;

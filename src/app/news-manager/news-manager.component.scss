@@ -26,3 +26,9 @@
     justify-content: center;
     align-items: center;
 }
+@media ( min-width: 1200px) and (min-height: 700px){
+    .news-array{
+        width: 80vw;
+        margin: 0 5vw 0 15vw;
+    }
+}

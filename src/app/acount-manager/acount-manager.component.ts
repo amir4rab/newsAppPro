@@ -25,9 +25,11 @@ export class AcountManagerComponent implements OnInit {
         this.loading = false;
       } else {
         this.loading = false;
+        this.getLocalCashedData();
       }
     }, _ => {
       this.loading = false;
+      console.log(`case3`);
     });
 
     this.globalDb.userDataHasBeenChanged.subscribe(res=>{
@@ -60,13 +62,14 @@ export class AcountManagerComponent implements OnInit {
       {'changedValue': 'uId','nValue': userData.uid},
     ], false);
     
+    console.log(userData.displayName);
     this.userdisplayName = userData.displayName;
 
   }
   
-  // setData(): void{
-  //   this.authService.setData({da:"das"});
-  // }
+  getLocalCashedData(): void{
+    this.userdisplayName = this.globalDb.userDataGet.displayName;
+  }
   
   logout(): void{
     this.globalDb.userLogedin = false;

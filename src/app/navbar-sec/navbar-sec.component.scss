@@ -33,3 +33,38 @@ nav{
         }
     }
 }
+@media ( min-width: 1200px) and (min-height: 700px){
+    nav{
+        background: #1D1D1D;
+        backdrop-filter: none;
+
+        flex-direction: column;
+        height: 100%;
+        
+        .navBtn{
+            width: 1vw;
+            outline: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            a{
+                color: #777777;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                align-content: center;
+                flex-direction: column;
+                &:hover{
+                    cursor: pointer;
+                    color: lighten(#777777, 5%);
+                }
+                &:active{
+                    color: lighten(#777777, 15%);
+                }
+                &.active{
+                    color: #FFFFFF;
+                }
+            }
+        }
+    }
+}
