@@ -18,16 +18,18 @@ export class GnewsApiService {
     return this.http.get<NewsResponse>(`https://gnews.io/api/v4/top-headlines?&country=${this.location}&token=${environment.GNews}`);
   }
   getCashedData(): Observable<NewsResponse>{
-    const country = this.globalDb.locationDataGeter('locationCountryCode');
-    switch(country.toLowerCase()){
-      case 'de':{
-        return this.http.get<NewsResponse>('../../assets/chashedGnews/deNews.txt');
-        break
-      }
-      default: {
-        return this.http.get<NewsResponse>('../../assets/chashedGnews/deNews.txt');
-        break
-      }
-    }
+    const countryCode = (this.globalDb.locationDataGeter('locationCountryCode')).toLowerCase();
+    return this.http.get<NewsResponse>(`../../assets/chashedGnews/${countryCode}News.json`);
+    // const countryCode: string = null;
+    // switch(countryCode){
+    //   case 'de':{
+    //     return this.http.get<NewsResponse>('../../assets/chashedGnews/deNews.txt');
+    //     break
+    //   }
+    //   default: {
+    //     return this.http.get<NewsResponse>('../../assets/chashedGnews/deNews.txt');
+    //     break
+    //   }
+    // }
   }
 }
