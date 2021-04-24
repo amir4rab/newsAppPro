@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 #envierment data
-src/envierment/
+src/environments/
